@@ -1,6 +1,6 @@
 from . import ie    
 from . import types
-from functools import lru_cache
+from functools32 import lru_cache
 
 import struct
 
