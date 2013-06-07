@@ -68,7 +68,7 @@ class IpfixType:
 
 class StructType(IpfixType):
     def __init__(self, name, num, stel, valenc = _identity, valdec = _identity):
-        super().__init__(name, num, valenc, valdec)
+        IpfixType.__init__(self,name, num, valenc, valdec)
         self.stel = stel
         self.st = struct.Struct("!"+stel)
         self.length = self.st.size
@@ -94,7 +94,7 @@ class StructType(IpfixType):
 
 class OctetArrayType(IpfixType):
     def __init__(self, name, num, valenc = lambda x: x, valdec = lambda x: x):
-        super().__init__(name, num, valenc, valdec)
+        IpfixType.__init__(self,name, num, valenc, valdec)
         self.length = Varlen
     
     def for_length(self, length):
