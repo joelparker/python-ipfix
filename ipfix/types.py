@@ -7,7 +7,7 @@
 
 from datetime import datetime, timedelta
 from functools import total_ordering
-from ipaddress import ip_address
+from ipaddr import IPAddress
 import struct
 
 # constants
@@ -147,11 +147,19 @@ def _encode_ntp(dt):
 def _decode_ntp(ntp):
     raise NotImplementedError()
 
-def _encode_ip(ipaddr):
-    return ipaddr.packed()
+def _encode_ip4(ipaddr):
+    ip_num_value = ipaddr._ip
+    return struct.pack('!L',ip_num_value)
     
-def _decode_ip(octets):
-    return ip_address(octets)
+def _decode_ip4(octets):
+    ip_num_value = struct.unpack('!L',octects)[0]
+    return ipaddr.IPAdress(ip_num_value)
+    
+def _encode_ip6(ipaddr):
+    raise NotImplementedError()
+
+def _decode_ip6(octets):
+    raise NotImplementedError()
 
 # builtin type registry
 _Types = [
@@ -173,8 +181,8 @@ _Types = [
     StructType("dateTimeMilliseconds", 15, "Q", _encode_msec, _decode_msec),
     StructType("dateTimeMicroseconds", 16, "Q", _encode_ntp, _decode_ntp),
     StructType("dateTimeNanoseconds", 17, "Q", _encode_ntp, _decode_ntp),
-    StructType("ipv4Address", 18, "4s", _encode_ip, _decode_ip),
-    StructType("ipv6Address", 19, "16s", _encode_ip, _decode_ip)
+    StructType("IPv4Address", 18, "4b", _encode_ip4, _decode_ip4),
+    StructType("IPv6Address", 19, "16s", _encode_ip6, _decode_ip6)
 ]
 
 _TypeForName = { ietype.name: ietype for ietype in _Types }
