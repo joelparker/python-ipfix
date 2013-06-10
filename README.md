@@ -1,7 +1,7 @@
 python-ipfix
 ============
 
-IPFIX implementation for Python 3.x
+IPFIX implementation for Python 
 
 Some notes about the Python 2.7 port branch
 
